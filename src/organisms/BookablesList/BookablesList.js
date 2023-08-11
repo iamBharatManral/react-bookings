@@ -1,7 +1,7 @@
 import data from "../../static.json";
 import styles from "./BookablesList.module.css"
 import {useState} from "react";
-import {FaArrowRight} from "react-icons/fa";
+import {FaArrowDown, FaArrowRight, FaArrowUp} from "react-icons/fa";
 import Picker from "../../atoms/Picker/Picker";
 import Button from "../../atoms/Button/Button";
 
@@ -37,8 +37,7 @@ const BookablesList = () => {
                 .map((bookable, id) => (<div className={styles.title} key={id}>
                         <div className={styles.header}>
                             <h2>{bookable.title}</h2>
-                            <label htmlFor="details">Show Details <input type="checkbox" id={"details"}
-                                                                         onChange={toggleDetails}/></label>
+                            <div className={styles.arrow}>{hasDetails ? <FaArrowDown onClick={toggleDetails}/> : <FaArrowUp onClick={toggleDetails}/>}</div>
                         </div>
                         <hr/>
                         <div className={styles.content}>

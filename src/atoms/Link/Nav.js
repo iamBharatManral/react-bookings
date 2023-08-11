@@ -15,15 +15,17 @@ const Nav = ({icon, text, path}) => {
 
 const NavStyled = styled.div`
     padding: 0.5rem 1rem;
-    color: var(--clr-yellow);
     background: wheat;
     font-size: 1.2rem;
+    border-radius: 10px;
+  
     .link{
         display: flex;
         align-items: center;
         gap: 0.5rem;
         text-decoration: none;
     }
+    
 `
 
 export default Nav;

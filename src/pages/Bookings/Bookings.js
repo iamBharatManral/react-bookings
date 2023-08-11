@@ -1,9 +1,9 @@
 import React from 'react';
-
+import styles from './Bookings.module.css'
 const BookingsPage = (props) => (
-    <div>
+    <main className={styles.container}>
         Bookings Page
-    </div>
+    </main>
 );
 
 export default BookingsPage;

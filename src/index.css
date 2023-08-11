@@ -16,11 +16,34 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Cormorant Garamond', serif;
-    background-color: var(--clr-light-blue);
+html, body {
+    height: 100%;
 }
 
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #D3CCE3;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E9E4F0, #D3CCE3);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E9E4F0, #D3CCE3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
 a {
     text-decoration: none;
+    color: brown;
+}
+
+main {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+hr {
+    height: 2px;
+    box-shadow: 0 0 10px 0 indianred;
+    border: none;
+    background: indianred;
+}
+.selected{
+    background: #feca40;
+    color: indianred;
 }

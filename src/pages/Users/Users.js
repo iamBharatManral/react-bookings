@@ -1,9 +1,10 @@
 import React from 'react';
+import UsersList from "../../organisms/UsersList/UsersList";
 
 const UsersPage = (props) => (
-    <div>
-        Users Page
-    </div>
+    <main>
+        <UsersList/>
+    </main>
 );
 
 export default UsersPage;

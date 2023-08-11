@@ -13,7 +13,10 @@ const BookablesList = () => {
     const groups = [...new Set(data.bookables.map(b => b.group))]
     const nextBookable = () => setBookableId(current => (current + 1) % bookables.length)
     const selectBookable = roomId => setBookableId(roomId)
-    const selectGroup = e => setGroup(e.target.value)
+    const selectGroup = e => {
+        setBookableId(0)
+        setGroup(e.target.value)
+    }
     const toggleDetails = () => setHasDetails(prev => !prev)
 
     return (

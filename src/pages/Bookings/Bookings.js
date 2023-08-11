@@ -1,8 +1,9 @@
 import React from 'react';
 import styles from './Bookings.module.css'
+import WeekPicker from "../../organisms/WeekPicker/WeekPicker";
 const BookingsPage = (props) => (
     <main className={styles.container}>
-        Bookings Page
+        <WeekPicker date={new Date()}/>
     </main>
 );
 

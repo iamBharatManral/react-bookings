@@ -45,11 +45,13 @@ const BookablesList = () => {
                             <hr/>
                             {hasDetails && (
                                 <div className={styles.details}>
+                                    <div className={styles.bookings}>Bookings</div>
                                     <ul>
                                         {bookable.days.sort().map(
                                             d => (<li key={d}>{data.days[d]}</li>)
                                         )}
                                     </ul>
+                                    <div className={styles.sessions}>Sessions</div>
                                     <ul>
                                         {bookable.sessions.sort().map(
                                             d => (<li key={d}>{data.sessions[d]}</li>)

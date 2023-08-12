@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useRef, useState} from 'react';
 import weekReducer from "../../reducers/weekReducer";
 import {getWeek} from "../../utils/dateWrangler";
 import styles from './WeekPicker.module.css'
@@ -7,6 +7,7 @@ import Button from "../../atoms/Button/Button";
 
 const WeekPicker = ({date}) => {
     const [week, dispatch] = useReducer(weekReducer, date, getWeek)
+    const [dateText, setDateText] = useState(() => getWeek(new Date()))
     return (
         <div className={styles.container}>
             <div className={styles.picker}>
@@ -14,10 +15,13 @@ const WeekPicker = ({date}) => {
                     <FaArrowLeft/>
                     Prev
                 </Button>
-                <Button onClick={() => dispatch({type: "TODAY"})}>
-                    <FaCalendar/>
-                    Today
-                </Button>
+                <div className={styles.setDate}>
+                    <input type="text" onChange={(e) => setDateText(e.target.value)}/>
+                    <Button onClick={() => dispatch({type: "SET_DATE", payload: dateText})}>
+                        <FaCalendar/>
+                        Go
+                    </Button>
+                </div>
                 <Button onClick={() => dispatch({type: "NEXT_WEEK"})}>
                     Prev
                     <FaArrowRight/>

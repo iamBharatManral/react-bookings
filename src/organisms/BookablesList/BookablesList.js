@@ -1,5 +1,5 @@
 import styles from "./BookablesList.module.css"
-import {useEffect, useReducer, useState} from "react";
+import {useEffect, useReducer, useRef, useState} from "react";
 import {FaArrowDown, FaArrowRight, FaArrowUp} from "react-icons/fa";
 import Picker from "../../atoms/Picker/Picker";
 import Button from "../../atoms/Button/Button";
@@ -20,6 +20,7 @@ const BookablesList = () => {
     const [hasDetails, setHasDetails] = useState(false)
     const bookables = state.data && state.data.bookables.filter(b => b.group === group);
     const groups = state.data && [...new Set(state.data.bookables.map(b => b.group))]
+    const nextButtonRef = useRef()
 
     useEffect(() => {
         getBookables()
@@ -27,7 +28,10 @@ const BookablesList = () => {
             .catch(err => dispatch({type: "SET_ERROR"}))
     },[])
     const nextBookable = () => setBookableId(current => (current + 1) % bookables.length)
-    const selectBookable = roomId => setBookableId(roomId)
+    const selectBookable = roomId => {
+        setBookableId(roomId)
+        nextButtonRef.current.focus()
+    }
     const selectGroup = e => {
         setBookableId(0)
         setGroup(e.target.value)
@@ -48,7 +52,7 @@ const BookablesList = () => {
                                  onClick={() => selectBookable(id)}>{bookable.title}</Button>)
                     )
                 }
-                <Button type={"button"} onClick={nextBookable} link={"true"}>Next<FaArrowRight/></Button>
+                <Button type={"button"} onClick={nextBookable} link={"true"} innerref={nextButtonRef} autoFocus>Next<FaArrowRight/></Button>
             </div>
             {bookables
                 .filter((bookable, id) => id === bookableId)

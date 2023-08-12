@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const Button = (props) => {
     return (
-        <StyledButton {...props}>
+        <StyledButton {...props} ref={props.innerref}>
             {props.children}
         </StyledButton>
     );
@@ -20,5 +20,8 @@ const StyledButton = styled.button`
     display: flex;
     justify-content: space-between;
     background: ${props => props.link && "cornflowerblue"};
+    &:focus{
+      background: ${props => props.innerref && "blue"};
+    }
 `
 export default Button;

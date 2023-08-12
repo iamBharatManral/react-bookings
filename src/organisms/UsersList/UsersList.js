@@ -3,16 +3,20 @@ import {Fragment, useEffect, useState} from "react";
 import Button from "../../atoms/Button/Button";
 import getUsers from "../../utils/dao/getUsers";
 import Spinner from "../../atoms/Spinner/Spinner";
+import Error from "../../atoms/Error/Error";
 
 const UsersList = () => {
     const [currentUser, setCurrentUser] = useState("Mark")
     const [users, setUsers] = useState(null)
+    const [error, setError] = useState(false)
 
     useEffect(() => {
         getUsers()
             .then(data => setUsers(data.users))
+            .catch(err => setError(true))
     }, [])
     const changeUser = e => setCurrentUser(e.target.innerText)
+    const noData = error ? <Error/> : <Spinner text={"Loading Users"}/>
 
     return users ? (<div className={styles.container}>
         <div className={styles.users}>
@@ -33,7 +37,7 @@ const UsersList = () => {
                     </div>
                 </Fragment>))}
         </div>
-    </div>) : <Spinner text={"Loading Users"}/>;
+    </div>) : noData;
 };
 
 export default UsersList;

@@ -33,7 +33,7 @@ const UsersList = () => {
                     </div>
                 </Fragment>))}
         </div>
-    </div>) : <Spinner/>;
+    </div>) : <Spinner text={"Loading Users"}/>;
 };
 
 export default UsersList;

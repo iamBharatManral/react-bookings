@@ -71,7 +71,7 @@ const BookablesList = () => {
                     </div>
                 ))}
         </div>
-    ) : <Spinner/>;
+    ) : <Spinner text={"Loading Bookables"}/>;
 };
 
 export default BookablesList;

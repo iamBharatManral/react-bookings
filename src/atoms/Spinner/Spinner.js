@@ -2,16 +2,16 @@ import React from 'react';
 import styled from "styled-components";
 import {FaSpinner} from "react-icons/fa";
 
-const Spinner = () => {
+const Spinner = ({text}) => {
     return (
         <StyledSpinner>
-            <FaSpinner className={"icon-spin"}/>
+            <FaSpinner className={"icon-spin"}/> {text}
         </StyledSpinner>
     );
 };
 
 const StyledSpinner = styled.div`
-    font-size: 3rem;
+    font-size: 2rem;
     @keyframes rotate{
       from{
         transform: rotate(0deg)

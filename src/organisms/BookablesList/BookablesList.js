@@ -1,23 +1,31 @@
 import styles from "./BookablesList.module.css"
-import {useEffect, useState} from "react";
+import {useEffect, useReducer, useState} from "react";
 import {FaArrowDown, FaArrowRight, FaArrowUp} from "react-icons/fa";
 import Picker from "../../atoms/Picker/Picker";
 import Button from "../../atoms/Button/Button";
 import getBookables from "../../utils/dao/getBookables";
 import Spinner from "../../atoms/Spinner/Spinner";
+import bookablesReducer from "../../reducers/bookablesReducer";
+import Error from '../../atoms/Error/Error'
 
+const initialState = {
+    loading: true,
+    data: null,
+    error: false
+}
 const BookablesList = () => {
-    const [data, setData] = useState(null)
+    const [state, dispatch] = useReducer(bookablesReducer, null, () => initialState)
     const [group, setGroup] = useState("Kit")
     const [bookableId, setBookableId] = useState(0)
     const [hasDetails, setHasDetails] = useState(false)
-    const bookables = data && data.bookables.filter(b => b.group === group);
-    const groups = data && [...new Set(data.bookables.map(b => b.group))]
+    const bookables = state.data && state.data.bookables.filter(b => b.group === group);
+    const groups = state.data && [...new Set(state.data.bookables.map(b => b.group))]
 
     useEffect(() => {
         getBookables()
-            .then(data => setData(data))
-    })
+            .then(data => dispatch({type: "SET_DATA", payload: data}))
+            .catch(err => dispatch({type: "SET_ERROR"}))
+    },[])
     const nextBookable = () => setBookableId(current => (current + 1) % bookables.length)
     const selectBookable = roomId => setBookableId(roomId)
     const selectGroup = e => {
@@ -26,7 +34,9 @@ const BookablesList = () => {
     }
     const toggleDetails = () => setHasDetails(prev => !prev)
 
-    return data ? (
+    const noData = state.error ? <Error/> : <Spinner text={"Loading Bookables"}/>
+
+    return state.data ? (
         <div className={styles.bookables}>
             <div className={styles.list}>
                 <Picker onChange={selectGroup} value={group}>
@@ -56,13 +66,13 @@ const BookablesList = () => {
                                     <div className={styles.bookings}>Bookings</div>
                                     <ul>
                                         {bookable.days.sort().map(
-                                            d => (<li key={d}>{data.days[d]}</li>)
+                                            d => (<li key={d}>{state.data.days[d]}</li>)
                                         )}
                                     </ul>
                                     <div className={styles.sessions}>Sessions</div>
                                     <ul>
                                         {bookable.sessions.sort().map(
-                                            d => (<li key={d}>{data.sessions[d]}</li>)
+                                            d => (<li key={d}>{state.data.sessions[d]}</li>)
                                         )}
                                     </ul>
                                 </div>
@@ -71,7 +81,7 @@ const BookablesList = () => {
                     </div>
                 ))}
         </div>
-    ) : <Spinner text={"Loading Bookables"}/>;
+    ) : noData;
 };
 
 export default BookablesList;

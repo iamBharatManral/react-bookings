@@ -1,5 +1,5 @@
 import './App.css';
-import Header from "./organisms/header/Header";
+import Header from "./organisms/Header/Header";
 
 function App() {
   return (

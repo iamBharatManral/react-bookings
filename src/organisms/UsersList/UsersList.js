@@ -1,21 +1,28 @@
-import data from "../../static.json";
 import styles from "./UsersList.module.css"
-import {Fragment, useState} from "react";
+import {Fragment, useEffect, useState} from "react";
 import Button from "../../atoms/Button/Button";
+import getUsers from "../../utils/dao/getUsers";
+import Spinner from "../../atoms/Spinner/Spinner";
 
 const UsersList = () => {
     const [currentUser, setCurrentUser] = useState("Mark")
+    const [users, setUsers] = useState(null)
+
+    useEffect(() => {
+        getUsers()
+            .then(data => setUsers(data.users))
+    }, [])
     const changeUser = e => setCurrentUser(e.target.innerText)
 
-    return (<div className={styles.container}>
+    return users ? (<div className={styles.container}>
         <div className={styles.users}>
-            {data.users
+            {users && users
                 .map(user =>
                     <Button key={user.id} onClick={changeUser} className={user.name === currentUser ? "selected" : ""}
                     >{user.name}</Button>)}
         </div>
         <div className={styles.details}>
-            {data.users
+            {users && users
                 .filter(user => user.name === currentUser)
                 .map(user => (<Fragment key={user.id}>
                     <h2>{user.name}</h2>
@@ -26,7 +33,7 @@ const UsersList = () => {
                     </div>
                 </Fragment>))}
         </div>
-    </div>);
+    </div>) : <Spinner/>;
 };
 
 export default UsersList;

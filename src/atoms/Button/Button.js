@@ -12,7 +12,7 @@ const Button = (props) => {
 const StyledButton = styled.button`
     padding: 0.5rem 1rem;
     border-radius: 10px;
-    color: ${props => props.link ? "white" : "indianred"};
+    color: ${props => props.link === "true" ? "white" : "indianred"};
     font-size: 1.2rem;
     outline: none;
     cursor: pointer;

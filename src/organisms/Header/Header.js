@@ -7,13 +7,14 @@ import UserPicker from "../../molecules/UserPicker/UserPicker";
 import BookingsPage from "../../pages/Bookings/Bookings";
 import BookablesPage from "../../pages/Bookables/Bookables";
 import UsersPage from "../../pages/Users/Users";
+import Home from "../../pages/Home/Home";
 
 const Header = () => {
     return (
         <Router>
             <header>
                 <div className={styles.title}>
-                    <h1>Reservations</h1>
+                    <h1><a href="/" className={styles.home}>Reservations</a></h1>
                     <p>&ldquo;Where comfort and adventure intertwine to create unforgettable moments.&rdquo;</p>
                 </div>
                 <div className={styles.navigation}>
@@ -29,6 +30,7 @@ const Header = () => {
                 <Route path={"/bookings"} element={<BookingsPage/>}/>
                 <Route path={"/bookables"} element={<BookablesPage/>}/>
                 <Route path={"/users"} element={<UsersPage/>}/>
+                <Route path={"/"} element={<Home/>}/>
             </Routes>
         </Router>
     );

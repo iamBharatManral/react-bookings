@@ -1,9 +1,9 @@
 import React from 'react';
-import BookablesList from "../../organisms/BookablesList/BookablesList";
+import BookablesView from "../../organisms/BookablesView/BookablesView";
 const BookablesPage = () => {
     return (
         <main>
-            <BookablesList/>
+            <BookablesView/>
         </main>
     )
 };

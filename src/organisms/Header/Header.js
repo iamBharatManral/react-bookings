@@ -20,7 +20,7 @@ const Header = () => {
                 <div className={styles.navigation}>
                     <nav className={styles.nav}>
                         <Nav path={"/bookings"} text={"Bookings"} icon={<FaCalendarAlt/>}></Nav>
-                        <Nav path={"/bookables"} text={"Bookables"} icon={<FaDoorOpen/>}></Nav>
+                        <Nav path={"/bookables"} text={"BookablesView"} icon={<FaDoorOpen/>}></Nav>
                         <Nav path={"/users"} text={"Users"} icon={<FaUsers/>}></Nav>
                     </nav>
                     <UserPicker/>

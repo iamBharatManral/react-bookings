@@ -1,4 +1,4 @@
-import React, {useEffect, useReducer, useRef, useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import BookablesList from "../BookablesList/BookablesList";
 import BookableDetails from "../BookableDetails/BookableDetails";
 import bookablesReducer from "../../reducers/bookablesReducer";
@@ -8,57 +8,35 @@ import Spinner from "../../atoms/Spinner/Spinner";
 import styles from './BookablesView.module.css'
 
 const initialState = {
-    error: false,
-    loading: true,
-    data: null
+    bookableId: 0,
+    group: "Kit",
+    hasDetails: false,
+    data: null,
+    isLoading: true,
+    error: false
 }
 
 const BookablesView = () => {
     const [state, dispatch] = useReducer(bookablesReducer, null, () => initialState)
-    const [group, setGroup] = useState("Kit")
-    const [bookableId, setBookableId] = useState(0)
-    const [hasDetails, setHasDetails] = useState(false)
-    const nextButtonRef = useRef();
-    const groups = state.data && [...new Set(state.data.bookables.map(b => b.group))]
 
     useEffect(() => {
         getBookables()
-            .then(data => dispatch({type: "SET_DATA", payload: data}))
+            .then(data => dispatch({type: "SET_BOOKABLES", payload: data}))
             .catch(err => dispatch({type: "SET_ERROR"}))
     }, [])
-    const nextBookable = () => setBookableId(current => (current + 1) % (state.data.bookables.filter(b => b.group === group).length))
-    const selectBookable = roomId => {
-        setBookableId(roomId)
-        nextButtonRef.current.focus()
-    }
-    const selectGroup = e => {
-        setBookableId(0)
-        setGroup(e.target.value)
-    }
-    const toggleDetails = () => setHasDetails(prev => !prev)
 
     const noData = state.error ? <Error/> : <Spinner text={"Loading Bookables"}/>
     return (
         state.data ?
             <div className={styles.container}>
                 <BookablesList
-                    bookables={state.data.bookables}
-                    selectBookable={selectBookable}
-                    selectGroup={selectGroup}
-                    bookableId={bookableId}
-                    groups={groups}
-                    nextButtonRef={nextButtonRef}
-                    nextBookable={nextBookable}
-                    group={group}
+                    state={state}
+                    dispatch={dispatch}
                 />
                 <BookableDetails
-                    bookables={state.data.bookables}
-                    bookableId={bookableId}
-                    hasDetails={hasDetails}
-                    group={group}
-                    sessions={state.data.sessions}
-                    days={state.data.days}
-                    toggleDetails={toggleDetails}/>
+                    state={state}
+                    dispatch={dispatch}
+                />
             </div> : noData
     );
 };

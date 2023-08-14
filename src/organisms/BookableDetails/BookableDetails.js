@@ -2,7 +2,8 @@ import React from 'react';
 import {FaArrowDown, FaArrowUp} from "react-icons/fa";
 import styles from './BookableDetails.module.css'
 
-const BookableDetails = ({bookables, bookableId, hasDetails, toggleDetails, group, days, sessions}) => {
+const BookableDetails = ({state, dispatch}) => {
+    const {data: {bookables, sessions, days}, group, bookableId, hasDetails} = state;
     return (
         <div>
             {bookables
@@ -11,7 +12,7 @@ const BookableDetails = ({bookables, bookableId, hasDetails, toggleDetails, grou
                 .map((bookable, id) => (<div className={styles.details} key={id}>
                         <div className={styles.header}>
                             <h2>{bookable.title}</h2>
-                            <div className={styles.arrow}>{hasDetails ? <FaArrowDown onClick={toggleDetails}/> : <FaArrowUp onClick={toggleDetails}/>}</div>
+                            <div className={styles.arrow}>{hasDetails ? <FaArrowDown onClick={() => dispatch({type: "TOGGLE_DETAILS"})}/> : <FaArrowUp onClick={() => dispatch({type: "TOGGLE_DETAILS"})}/>}</div>
                         </div>
                         <hr/>
                         <div className={styles.content}>
